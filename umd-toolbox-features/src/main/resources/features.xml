@@ -8,11 +8,14 @@
 
     <bundle>mvn:edu.umd.lib.camel/umd-fcrepo-ldpath-blueprint/${project.version}</bundle>
     <bundle>mvn:edu.umd.lib.camel/umd-fedora-ldclient-provider/${project.version}</bundle>
-    <bundle dependency="true">mvn:javax.ws.rs/javax.ws.rs-api/2.0</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons.lang3.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
+    <bundle dependency="true">mvn:org.fcrepo.client/fcrepo-java-client/${fcrepo-java-client.version}</bundle>
     <feature version="${fcrepo.version}">fcrepo-ldpath-core</feature>
     <feature version="${fcrepo.version}">fcrepo-service-ldcache-file</feature>
 
-    <configfile finalname="/etc/org.fcrepo.camel.ldpath.cfg">mvn:org.fcrepo.camel/fcrepo-ldpath-blueprint/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.umd.lib.camel.ldpath.cfg">mvn:edu.umd.lib.camel/umd-fcrepo-ldpath-blueprint/${project.version}/cfg/configuration</configfile>
   </feature>
 
 </features>

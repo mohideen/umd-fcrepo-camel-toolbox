@@ -71,9 +71,9 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>javax.ws.rs-api</artifactId>
-      <version>2.0</version>
+      <groupId>org.fcrepo.client</groupId>
+      <artifactId>fcrepo-java-client</artifactId>
+      <version>${fcrepo-java-client.version}</version>
     </dependency>
 
     <!-- logging -->
@@ -147,12 +147,11 @@
               org.apache.marmotta.ldclient.endpoint.rdf;version=3.3.0,
               org.apache.marmotta.ldclient.provider.rdf;version=3.3.0,
               javax.realtime,
-              javax.ws.rs.core,
               javolution.*,
               org.apache.marmotta.commons.*;version=3.3.0,
               org.apache.marmotta.commons.vocabulary;version=3.3.0,
               org.apache.marmotta.ldpath.*;version=3.3.0,
-              org.fcrepo.camel.ldpath;version=${project.version}
+              edu.umd.lib.camel.ldpath;version=${project.version}
             </Export-Package>
             <Embed-Dependency>
               ldclient-api,ldpath-backend-linkeddata,ldclient-provider-rdf,marmotta-commons,marmotta-model-vocabs,ldpath-core-bundle

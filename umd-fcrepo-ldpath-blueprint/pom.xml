@@ -17,7 +17,8 @@
 
   <properties>
     <osgi.import.packages>
-      org.fcrepo.camel.ldpath;version=${project.version},
+      edu.umd.lib.camel.ldpath;version=${project.version},
+      org.fcrepo.camel.ldpath;version=${fcrepo.version},
       *
     </osgi.import.packages>
   </properties>
@@ -27,6 +28,11 @@
       <groupId>edu.umd.lib.camel</groupId>
       <artifactId>umd-fedora-ldclient-provider</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.fcrepo.camel</groupId>
+      <artifactId>fcrepo-ldpath</artifactId>
+      <version>${fcrepo.version}</version>
     </dependency>
   </dependencies>
 

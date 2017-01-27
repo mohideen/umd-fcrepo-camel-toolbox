@@ -17,8 +17,6 @@
  */
 package edu.umd.lib.camel.ldpath;
 
-import com.google.common.base.Preconditions;
-
 import org.apache.marmotta.ldclient.api.endpoint.Endpoint;
 import org.apache.marmotta.ldclient.provider.rdf.LinkedDataProvider;
 
@@ -26,6 +24,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.http.auth.AuthScope;
@@ -38,7 +37,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClients;
 
-import javax.ws.rs.core.Link;
+import org.fcrepo.client.FcrepoLink;
 
 /**
  * Linked Data implementation of a data provider. Allows retrieval of resources using Linked Data standards.
@@ -54,8 +53,8 @@ public class FedoraProvider extends LinkedDataProvider {
     private final String NON_RDF_SOURCE_URI = "http://www.w3.org/ns/ldp#NonRDFSource";
 
     FedoraProvider(final AuthScope authScope, final Credentials credentials) {
-        Preconditions.checkNotNull(authScope);
-        Preconditions.checkNotNull(credentials);
+        Objects.requireNonNull(authScope);
+        Objects.requireNonNull(credentials);
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(authScope, credentials);
         httpClient = HttpClients.custom()
@@ -84,7 +83,7 @@ public class FedoraProvider extends LinkedDataProvider {
      */
     @Override
     public List<String> buildRequestUrl(final String resourceUri, final Endpoint endpoint) {
-        Preconditions.checkNotNull(resourceUri);
+        Objects.requireNonNull(resourceUri);
         try {
             final Optional<String> nonRdfSourceDescUri = getNonRDFSourceDescribedByUri(resourceUri);
             if ( nonRdfSourceDescUri.isPresent() ) {
@@ -103,7 +102,7 @@ public class FedoraProvider extends LinkedDataProvider {
             String descriptionUri = null;
             boolean isNonRDFSource = false;
             for ( Header h : links ) {
-                final Link link = Link.valueOf(h.getValue());
+                final FcrepoLink link = new FcrepoLink(h.getValue());
                 if ( link.getRel().equals("describedby") ) {
                     descriptionUri = link.getUri().toString();
                 } else if ( link.getUri().toString().contains(NON_RDF_SOURCE_URI)) {
