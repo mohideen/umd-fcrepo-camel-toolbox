@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>edu.umd.lib.camel</groupId>
+    <artifactId>umd-fcrepo-camel-toolbox</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>umd-toolbox-features</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>Provisioning features for Karaf</name>
+  <description>Feature repositories for provisioning the Camel Toolbox modules in Karaf.</description>
+
+  <properties>
+    <cal10n.version>0.8.1</cal10n.version>
+    <commons-beanutils.version>1.8.3</commons-beanutils.version>
+    <commons-codec.version>1.10</commons-codec.version>
+    <commons-collections.version>3.2.1</commons-collections.version>
+    <commons-csv.version>1.4</commons-csv.version>
+    <commons-digester.version>1.8</commons-digester.version>
+    <commons-httpclient.version>3.1</commons-httpclient.version>
+    <commons-io.version>2.5</commons-io.version>
+    <commons-lang.version>3.4</commons-lang.version>
+    <commons-validator.version>1.4.0</commons-validator.version>
+    <dexx.version>0.6</dexx.version>
+    <fluent-hc.version>4.5.2</fluent-hc.version>
+    <guava.version>18.0</guava.version>
+    <httpclient.version>4.5.2</httpclient.version>
+    <httpclient-cache.version>4.3.5</httpclient-cache.version>
+    <httpcore.version>4.4.5</httpcore.version>
+    <httpcore-nio.version>4.4.4</httpcore-nio.version>
+    <httpmime.version>4.5.2</httpmime.version>
+    <jaxen.version>1.1.6</jaxen.version>
+    <jdom2.version>2.0.5</jdom2.version>
+    <joda-time.version>2.5</joda-time.version>
+    <jsonld.version>0.5.1</jsonld.version>
+    <jsoup.version>1.8.3</jsoup.version>
+    <marmotta.version>3.3.0</marmotta.version>
+    <semargl.version>0.6.1</semargl.version>
+    <sesame.version>2.7.13</sesame.version>
+    <thrift.version>0.9.2</thrift.version>
+  </properties>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/features.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/features.xml</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
+    <plugins>
+
+      <!-- pax exam -->
+      <plugin>
+       <groupId>org.ops4j.pax.exam</groupId>
+       <artifactId>maven-paxexam-plugin</artifactId>
+       <version>${paxexam.plugin.version}</version>
+       <executions>
+         <execution>
+           <id>generate-config</id>
+           <goals>
+             <goal>generate-depends-file</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+
+     <!-- add configuration file to artifact set for OSGi deployment -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <configuration>
+          <portNames>
+            <portName>fcrepo.dynamic.test.port</portName>
+            <portName>fcrepo.dynamic.jms.port</portName>
+            <portName>fcrepo.dynamic.stomp.port</portName>
+            <portName>fcrepo.dynamic.reindexing.port</portName>
+            <portName>karaf.rmiRegistry.port</portName>
+            <portName>karaf.rmiServer.port</portName>
+            <portName>karaf.ssh.port</portName>
+            <portName>jetty.dynamic.stop.port</portName>
+          </portNames>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>${project.build.outputDirectory}/features.xml</file>
+                  <type>xml</type>
+                  <classifier>features</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+
+      <!-- enable checkstyle plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+      <!-- to generate the MANIFEST-FILE of the bundle -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
